@@ -20,6 +20,13 @@ interface Phrase {
 }
 
 export function PhraseCard() {
+  const [phrase, setPhrase] = React.useState<Phrase | null>(null);
+
+  React.useEffect(() => {
+    const todaysPhrase = getTodaysPhrase();
+    setPhrase(todaysPhrase);
+  }, []);
+
   //get phrase
   function getTodaysPhrase(): Phrase {
     // Get the index and date from local storage
@@ -54,6 +61,8 @@ export function PhraseCard() {
     };
     return today.toLocaleDateString("en-US", options);
   };
+
+  if (!phrase) return null;
 
   return (
     <div className="flex flex-col gap-12 p-2">
