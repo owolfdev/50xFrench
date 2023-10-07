@@ -60,7 +60,7 @@ export function PhraseCard() {
       <div className="flex flex-col gap-0 p-2">
         <div className="">{getFormattedDateWithDay()}</div>
         <div className="text-xl ">Repeat this phrase 50 times.</div>
-        <div>If you don't feel fluent after that, repeat.</div>
+        <div>Visit every day for a new phrase.</div>
       </div>
       <Card className="w-full">
         <CardHeader>
