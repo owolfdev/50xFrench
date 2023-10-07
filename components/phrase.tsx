@@ -72,21 +72,13 @@ export function PhraseCard() {
         <div>Visit every day for a new phrase.</div>
       </div>
       <Card className="w-full">
-        <CardHeader>
-          {/* <div className="pb-4">{getFormattedDateWithDay()}</div>
-        <CardTitle>Repeat this phrase 50 times today.</CardTitle>
-        <CardDescription>
-          If you don't feel fluent after this, repeat.
-        </CardDescription> */}
-        </CardHeader>
+        <CardHeader></CardHeader>
         <CardContent>
           <div className="sm:p-6">
-            <p className="sm:text-3xl text-2xl">{getTodaysPhrase().phrase}</p>
+            <p className="sm:text-3xl text-2xl">{phrase.phrase}</p>
           </div>
           <div className="sm:p-6 p-4">
-            <p className="text-muted-foreground">
-              {getTodaysPhrase().translation}
-            </p>
+            <p className="text-muted-foreground">{phrase.translation}</p>
           </div>
         </CardContent>
         <CardFooter className="flex justify-between">
