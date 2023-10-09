@@ -51,7 +51,7 @@ const PhraseDisplay: React.FC<{}> = () => {
       // Check if it's the user's first visit
       localStorage.setItem("lastVisitDate", today);
       localStorage.setItem("phraseIndex", "0");
-    } else if (lastVisitDate !== "today") {
+    } else if (lastVisitDate !== today) {
       phraseIndex += 1;
       if (phraseIndex >= phrases.length) {
         phraseIndex = 0;
