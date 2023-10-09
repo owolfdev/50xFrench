@@ -12,7 +12,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { PHRASES } from "@/data/french_phrases";
+import { useRouter } from "next/navigation";
+
+// import { PHRASES } from "@/data/french_phrases";
 
 interface Phrase {
   phrase: string;
@@ -21,6 +23,25 @@ interface Phrase {
 
 export function PhraseCard() {
   const [phrase, setPhrase] = React.useState<Phrase | null>(null);
+  const [playAudio, setPlayAudio] = React.useState(false);
+  const [cacheBuster, setCacheBuster] = React.useState(Date.now());
+  const [audioURL, setAudioURL] = React.useState<string | null>(null);
+  const audioRef = React.useRef<HTMLAudioElement | null>(null);
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (playAudio && audioRef.current) {
+      audioRef.current.play();
+      setPlayAudio(false); // Reset the trigger
+    }
+  }, [playAudio]);
+
+  React.useEffect(() => {
+    if (!phrase) return; // don't try to fetch audio if there's no phrase
+
+    // Fetch audio whenever the phrase changes
+    triggerTextToSpeech(phrase.phrase);
+  }, [phrase]);
 
   React.useEffect(() => {
     const todaysPhrase = getTodaysPhrase();
@@ -64,6 +85,45 @@ export function PhraseCard() {
 
   if (!phrase) return null;
 
+  async function triggerTextToSpeech(text: string) {
+    try {
+      const response = await fetch("/api/text-to-speech", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: text }),
+      });
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        // Update the state with the Supabase URL
+        setAudioURL(data.audioURL);
+      } else {
+        console.error(data.error);
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Error triggering text-to-speech:", error);
+    }
+  }
+
+  // Usage example (e.g., in an event handler)
+  triggerTextToSpeech(phrase.phrase);
+
+  const handleTextToSpeech = async () => {
+    console.log("handle text to speech:", phrase?.phrase);
+
+    // const response = await triggerTextToSpeech(phrase?.phrase as string);
+
+    // console.log("response", JSON.stringify(response));
+    // setCacheBuster(Date.now());
+    // router.refresh();
+    setPlayAudio(true);
+  };
+
   return (
     <div className="flex flex-col gap-12 p-2">
       <div className="flex flex-col gap-0 p-2">
@@ -82,10 +142,19 @@ export function PhraseCard() {
           </div>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button variant="outline">Previous</Button>
-          <Button>Next</Button>
+          <Button onClick={handleTextToSpeech} variant="outline">
+            Speak Phrase
+          </Button>
+          {/* <Button>Next</Button> */}
         </CardFooter>
       </Card>
+      <audio className="hidden" ref={audioRef} controls>
+        <source
+          src={`https://pvtdkxgnseqfwxsistpq.supabase.co/storage/v1/object/public/audio-bucket/output.mp3`}
+          type="audio/mpeg"
+        />
+        Your browser does not support the audio element.
+      </audio>
     </div>
   );
 }
