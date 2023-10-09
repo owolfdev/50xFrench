@@ -42,10 +42,10 @@ const PhraseDisplay: React.FC<{}> = () => {
     const lastVisitDate = getLastVisitDate();
     let phraseIndex = getLastPhraseIndex();
 
-    if (initialRender.current) {
-      initialRender.current = false;
-      return;
-    }
+    // if (initialRender.current) {
+    //   initialRender.current = false;
+    //   return;
+    // }
 
     if (!lastVisitDate) {
       // Check if it's the user's first visit
