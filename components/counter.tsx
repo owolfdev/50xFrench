@@ -25,7 +25,7 @@ const Counter = () => {
   return (
     <div className="flex flex-col gap-4 p-2">
       <div className="text-lg">
-        Count to 50 <span className="pl-2">Counter: {count}</span>
+        <span className="pl-2">Counter: {count} / 50</span>
       </div>
       <div className="flex gap-4">
         <Button variant={`outline`} onClick={incrementCounter}>
