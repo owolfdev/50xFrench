@@ -4,6 +4,7 @@ import phrases from "@/data/phrases.json";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import Counter from "@/components/counter";
 
 const getFormattedDateWithDay = (): string => {
   const options: Intl.DateTimeFormatOptions = {
@@ -129,6 +130,7 @@ const PhraseDisplay: React.FC<{}> = () => {
           </Button>
         </CardFooter>
       </Card>
+      <Counter />
     </div>
   );
 };
