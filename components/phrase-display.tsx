@@ -101,8 +101,8 @@ const PhraseDisplay: React.FC<{}> = () => {
     <div className="flex flex-col gap-6 p-2">
       <div className="flex flex-col gap-0 p-2">
         <div>{getFormattedDateWithDay()}</div>
-        <div className="text-xl">Repeat this phrase 50 times.</div>
-        <div>Visit every day for a new phrase.</div>
+        <div className="text-xl">Repeat this 50 times.</div>
+        {/* <div>Visit every day for a new phrase.</div> */}
       </div>
 
       <Card className="w-full">
