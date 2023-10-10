@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import confetti from "canvas-confetti";
 
 const Counter = () => {
   const [count, setCount] = useState(0);
@@ -13,13 +14,24 @@ const Counter = () => {
     }
 
     if (count === 49) {
-      const bellSound = new Audio("/sounds/Sosumi.mp3");
-      bellSound.play();
+      const applause = new Audio("/sounds/applause.mp3");
+      const glass = new Audio("/sounds/Glass.mp3");
+      glass.play();
+      // applause.play();
+      handleConfetti();
     }
   };
 
   const resetCounter = () => {
     setCount(0);
+  };
+
+  const handleConfetti = () => {
+    confetti({
+      particleCount: 150,
+      spread: 150,
+      origin: { y: 0.2 },
+    });
   };
 
   return (
@@ -29,7 +41,7 @@ const Counter = () => {
       </div>
       <div className="flex gap-4">
         <Button variant={`outline`} onClick={incrementCounter}>
-          Click Me
+          Count
         </Button>
         <Button variant={`outline`} onClick={resetCounter}>
           Reset

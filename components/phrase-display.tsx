@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Counter from "@/components/counter";
+import { InfoDialog } from "./info-dialog";
 
 const getFormattedDateWithDay = (): string => {
   const options: Intl.DateTimeFormatOptions = {
@@ -97,11 +98,16 @@ const PhraseDisplay: React.FC<{}> = () => {
     setPhrase(phrases[phraseIndex]);
   };
 
+  const handleGetInfo = () => {
+    console.log("get info:");
+  };
+
   return (
     <div className="flex flex-col gap-6 p-2">
       <div className="flex flex-col gap-0 p-2">
         <div>{getFormattedDateWithDay()}</div>
         <div className="text-xl">Repeat this 50 times.</div>
+        {/* <div>{phrases.length}</div> */}
         {/* <div>Visit every day for a new phrase.</div> */}
       </div>
 
@@ -125,9 +131,15 @@ const PhraseDisplay: React.FC<{}> = () => {
             </audio>
           )}
           {/* <div>{currentAudioFile.file}</div> */}
-          <Button onClick={handleNextPhrase} variant="outline">
-            Next
-          </Button>
+          <div className="flex gap-4 justify-between w-full sm:w-auto">
+            {/* <Button onClick={handleGetInfo} variant="outline">
+              Info
+            </Button> */}
+            <InfoDialog phrase={phrase} />
+            <Button onClick={handleNextPhrase} variant="outline">
+              Next
+            </Button>
+          </div>
         </CardFooter>
       </Card>
       <Counter />
