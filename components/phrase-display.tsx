@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Counter from "@/components/counter";
 import { InfoDialog } from "./info-dialog";
+import AudioPlayer from "./audio-player";
 
 const getFormattedDateWithDay = (): string => {
   const options: Intl.DateTimeFormatOptions = {
@@ -114,7 +115,9 @@ const PhraseDisplay: React.FC<{}> = () => {
       <Card className="w-full">
         <CardContent>
           <div className="pt-12 pb-6 px-4">
-            <p className="sm:text-3xl text-2xl">{phrase.phrase}</p>
+            <p className="sm:text-3xl text-2xl font-semibold">
+              {phrase.phrase}
+            </p>
           </div>
           <div className="sm:p-6 p-4">
             <p className="text-muted-foreground">{phrase.translation}</p>
@@ -122,13 +125,16 @@ const PhraseDisplay: React.FC<{}> = () => {
         </CardContent>
         <CardFooter className="flex sm:flex-row flex-col gap-6 sm:justify-between sm:items-center items-start">
           {currentAudioFile.file && (
-            <audio controls key={currentAudioFile.file}>
-              <source
-                src={`/audio/${currentAudioFile.file}`}
-                type="audio/mpeg"
-              />
-              Your browser does not support the audio element.
-            </audio>
+            <div>
+              <AudioPlayer currentAudioFile={currentAudioFile} />
+              {/* <audio controls key={currentAudioFile.file}>
+                <source
+                  src={`/audio/${currentAudioFile.file}`}
+                  type="audio/mpeg"
+                />
+                Your browser does not support the audio element.
+              </audio> */}
+            </div>
           )}
           {/* <div>{currentAudioFile.file}</div> */}
           <div className="flex gap-4 justify-between w-full sm:w-auto">

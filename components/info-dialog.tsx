@@ -22,12 +22,14 @@ export function InfoDialog({ phrase }: { phrase: any }) {
       <DialogTrigger asChild>
         <Button variant="outline">Info</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] max-h-[800px] overflow-scroll">
+      <DialogContent className="sm:max-w-[600px] max-h-[600px] overflow-scroll">
         <DialogHeader>
-          <DialogTitle>About</DialogTitle>
+          <DialogTitle>
+            <span className="text-2xl">About</span>
+          </DialogTitle>
           <DialogDescription>{phrase.phrase}</DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+        <div className="grid gap-4 py-4 text-xl">
           <ReactMarkdown>{explanation?.explanation}</ReactMarkdown>
         </div>
         <DialogFooter>

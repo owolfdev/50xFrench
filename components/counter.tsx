@@ -29,8 +29,8 @@ const Counter = () => {
   const handleConfetti = () => {
     confetti({
       particleCount: 150,
-      spread: 150,
-      origin: { y: 0.2 },
+      spread: 100,
+      origin: { y: 0.4 },
     });
   };
 
