@@ -1,13 +1,6 @@
 import React from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { DropdownMenuDemo } from "./dropdown-menu";
 
 function Navigation() {
   return (
@@ -15,38 +8,7 @@ function Navigation() {
       <h1 className="font-bold text-3xl">
         <Link href="/">Répéter</Link>
       </h1>
-
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <img alt="App Icon" src="/app-icon.png" width={40} height={40} />
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent>
-          {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
-          {/* <DropdownMenuSeparator /> */}
-          <DropdownMenuItem>
-            <Link href="/about">
-              <span className="text-lg sm:text-base font-mono font-semibold sm:font-normal">
-                About
-              </span>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link href="/documentation">
-              <span className="text-lg sm:text-base font-mono font-semibold sm:font-normal">
-                Documentation
-              </span>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link href="/contact">
-              <span className="text-lg sm:text-base font-mono font-semibold sm:font-normal">
-                Contact Us
-              </span>
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <DropdownMenuDemo />
     </nav>
   );
 }
