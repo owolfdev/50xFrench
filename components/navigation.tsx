@@ -26,19 +26,23 @@ function Navigation() {
           {/* <DropdownMenuSeparator /> */}
           <DropdownMenuItem>
             <Link href="/about">
-              <span className="text-lg sm:text-base font-mono">About</span>
+              <span className="text-lg sm:text-base font-mono font-semibold sm:font-normal">
+                About
+              </span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link href="/documentation">
-              <span className="text-lg sm:text-base font-mono">
+              <span className="text-lg sm:text-base font-mono font-semibold sm:font-normal">
                 Documentation
               </span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link href="/contact">
-              <span className="text-lg sm:text-base font-mono">Contact Us</span>
+              <span className="text-lg sm:text-base font-mono font-semibold sm:font-normal">
+                Contact Us
+              </span>
             </Link>
           </DropdownMenuItem>
         </DropdownMenuContent>

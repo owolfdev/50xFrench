@@ -22,11 +22,20 @@ export default function RootLayout({
         <main className="flex min-h-screen flex-col items-center justify-between sm:px-8 p-2 bg-[#f55751] font-mono text-sm">
           <Navigation />
           {children}
-          <footer className="p-8 text-black opacity-80 text-sm">
-            Répéter - French language learning app -{" "}
-            <Link target="_blank" href="http://owolf.com">
-              Built by Owolf
-            </Link>
+          <footer className="flex flex-col items-center p-8 gap-4">
+            <div className=" text-black opacity-80 text-sm flex gap-2 sm:flex-row flex-col items-center">
+              <div>Répéter</div> <div>- French language learning app -</div>
+              <div>
+                <Link target="_blank" href="http://owolf.com">
+                  Built by Owolf
+                </Link>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <Link href="/">Home</Link> <Link href="/about">About</Link>{" "}
+              <Link href="/documentation">Docs</Link>{" "}
+              <Link href="/contact">Contact</Link>
+            </div>
           </footer>
         </main>
       </body>
