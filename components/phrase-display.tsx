@@ -106,7 +106,7 @@ const PhraseDisplay: React.FC<{}> = () => {
 
   return (
     <div className="flex flex-col gap-4 p-2">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center p-1">
         <h1 className="font-bold text-3xl">Répéter</h1>
         <div className="pr-2">
           <img
