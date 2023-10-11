@@ -106,20 +106,6 @@ const PhraseDisplay: React.FC<{}> = () => {
 
   return (
     <div className="flex flex-col gap-4 p-2">
-      <div className="flex justify-between items-center p-1">
-        <h1 className="font-bold text-3xl">Répéter</h1>
-        <div className="pr-2">
-          <img
-            alt="App Icon"
-            src="/app-icon.png"
-            width={40}
-            height={40}
-            className="rounded-lg"
-
-            // layout="fill"
-          />
-        </div>
-      </div>
       {/* <div className="flex flex-col gap-0 p-2">
         <div>{getFormattedDateWithDay()}</div>
         <div className="text-xl">Repeat this 50 times.</div>
