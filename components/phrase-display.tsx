@@ -105,6 +105,7 @@ const PhraseDisplay: React.FC<{}> = () => {
 
   return (
     <div className="flex flex-col gap-6 p-2">
+      <h1 className="font-bold text-3xl">Répéter</h1>
       {/* <div className="flex flex-col gap-0 p-2">
         <div>{getFormattedDateWithDay()}</div>
         <div className="text-xl">Repeat this 50 times.</div>
