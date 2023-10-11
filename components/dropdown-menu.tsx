@@ -1,19 +1,4 @@
-import {
-  Cloud,
-  CreditCard,
-  Github,
-  Keyboard,
-  LifeBuoy,
-  LogOut,
-  Mail,
-  MessageSquare,
-  Plus,
-  PlusCircle,
-  Settings,
-  User,
-  UserPlus,
-  Users,
-} from "lucide-react";
+"use client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -31,46 +16,77 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function DropdownMenuDemo() {
+  const router = useRouter();
+
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <img alt="App Icon" src="/app-icon.png" width={40} height={40} />
       </DropdownMenuTrigger>
-
-      <DropdownMenuContent>
+      <DropdownMenuContent className="">
         {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
         {/* <DropdownMenuSeparator /> */}
+        <DropdownMenuGroup>
+          <DropdownMenuItem
+            onClick={() => {
+              router.push("/about");
+            }}
+          >
+            About
+            {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              router.push("/contact");
+            }}
+          >
+            Contact Us
+            {/* <DropdownMenuShortcut>⌘B</DropdownMenuShortcut> */}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              router.push("/");
+            }}
+          >
+            Home
+            {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
+          </DropdownMenuItem>
+          {/* <DropdownMenuItem>
+            Keyboard shortcuts
+            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+          </DropdownMenuItem> */}
+        </DropdownMenuGroup>
+        {/* <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem>Team</DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem>Email</DropdownMenuItem>
+                <DropdownMenuItem>Message</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>More...</DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
+          <DropdownMenuItem>
+            New Team
+            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>GitHub</DropdownMenuItem>
+        <DropdownMenuItem>Support</DropdownMenuItem>
+        <DropdownMenuItem disabled>API</DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href="/about">
-            <span className="text-lg sm:text-base font-mono font-semibold sm:font-normal">
-              About
-            </span>
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Link href="/documentation">
-            <span className="text-lg sm:text-base font-mono font-semibold sm:font-normal">
-              Documentation
-            </span>
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Link href="/contact">
-            <span className="text-lg sm:text-base font-mono font-semibold sm:font-normal">
-              Contact Us
-            </span>
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Link href="/">
-            <span className="text-lg sm:text-base font-mono font-semibold sm:font-normal">
-              Home
-            </span>
-          </Link>
-        </DropdownMenuItem>
+          Log out
+          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+        </DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );
