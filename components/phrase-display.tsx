@@ -105,12 +105,11 @@ const PhraseDisplay: React.FC<{}> = () => {
 
   return (
     <div className="flex flex-col gap-6 p-2">
-      <div className="flex flex-col gap-0 p-2">
+      {/* <div className="flex flex-col gap-0 p-2">
         <div>{getFormattedDateWithDay()}</div>
         <div className="text-xl">Repeat this 50 times.</div>
-        {/* <div>{phrases.length}</div> */}
-        {/* <div>Visit every day for a new phrase.</div> */}
-      </div>
+       
+      </div> */}
 
       <Card className="w-full">
         <CardContent>
