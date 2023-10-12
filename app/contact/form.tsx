@@ -176,12 +176,12 @@ export function ContactForm() {
             </FormItem>
           )}
         />
-        <div
+        {/* <div
           className="g-recaptcha"
-          data-sitekey="NEXT_PUBLIC_RECAPTCHA_SITE_KEY"
-        ></div>
+          data-sitekey={NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
+        ></div> */}
         <ReCAPTCHA
-          sitekey="NEXT_PUBLIC_RECAPTCHA_SITE_KEY"
+          sitekey={NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
           onChange={handleRecaptchaChange}
         />
 
