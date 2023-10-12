@@ -5,31 +5,37 @@ import confetti from "canvas-confetti";
 
 const Counter = ({ phraseId }: { phraseId: string }) => {
   const getCountFromLocalStorage = () => {
-    const storedCounts = JSON.parse(
-      localStorage.getItem("phraseCounts") || "[]"
-    );
-    const matchingCountObj = storedCounts.find(
-      (item: { phraseId: string; count: number }) => item.phraseId === phraseId
-    );
-    return matchingCountObj ? matchingCountObj.count : 0;
+    if (typeof window !== "undefined") {
+      const storedCounts = JSON.parse(
+        localStorage.getItem("phraseCounts") || "[]"
+      );
+      const matchingCountObj = storedCounts.find(
+        (item: { phraseId: string; count: number }) =>
+          item.phraseId === phraseId
+      );
+      return matchingCountObj ? matchingCountObj.count : 0;
+    }
+    return 0; // Default value
   };
 
-  const [count, setCount] = useState(getCountFromLocalStorage);
+  const [count, setCount] = useState<number>(0); // Set initial state to 0
 
   useEffect(() => {
-    // Update count when phraseId changes
     setCount(getCountFromLocalStorage());
   }, [phraseId]);
 
   const saveCountToLocalStorage = (newCount: number) => {
-    const storedCounts = JSON.parse(
-      localStorage.getItem("phraseCounts") || "[]"
-    );
-    const updatedCounts = storedCounts.filter(
-      (item: { phraseId: string; count: number }) => item.phraseId !== phraseId
-    );
-    updatedCounts.push({ phraseId, count: newCount });
-    localStorage.setItem("phraseCounts", JSON.stringify(updatedCounts));
+    if (typeof window !== "undefined") {
+      const storedCounts = JSON.parse(
+        localStorage.getItem("phraseCounts") || "[]"
+      );
+      const updatedCounts = storedCounts.filter(
+        (item: { phraseId: string; count: number }) =>
+          item.phraseId !== phraseId
+      );
+      updatedCounts.push({ phraseId, count: newCount });
+      localStorage.setItem("phraseCounts", JSON.stringify(updatedCounts));
+    }
   };
 
   const incrementCounter = () => {
