@@ -22,11 +22,11 @@ Welcome to **Répéter**, the unique French language learning app designed to st
 
 **How Does Répéter Work?**
 
-**Familiarize Yourself**: Begin by acquainting yourself with our carefully selected phrase of the day. Listen to its authentic pronunciation with the aid of our embedded audio controls. Seek deeper understanding by reading a comprehensive linguistic breakdown available by tapping on the Info button.
+**Step 1: Familiarize Yourself**: Begin by acquainting yourself with our carefully selected phrase of the day. Listen to its authentic pronunciation with the aid of our embedded audio controls. Seek deeper understanding by reading a comprehensive linguistic breakdown available by tapping on the Info button.
 
-**Embrace Repetition**: Continue by repeating the phrase, ensuring each repetition solidifies the meaning and helps you master the pronunciation. The key is to not just repeat, but to feel and understand the essence of each word.
+**Step 2: Embrace Repetition**: Continue by repeating the phrase, ensuring each repetition solidifies the meaning and helps you master the pronunciation. The key is to not just repeat, but to feel and understand the essence of each word.
 
-**Commit to the Challenge**: We challenge you to repeat the phrase in succession at least 50 times. It may sound daunting, but this repetition anchors the phrase in your mind, making recall effortless. Use the built-in counter to track your progress and stay motivated.
+**Step 3: Commit to the Challenge**: We challenge you to repeat the phrase in succession at least 50 times. It may sound daunting, but this repetition anchors the phrase in your mind, making recall effortless. Use the built-in counter to track your progress and stay motivated.
 
 **Why Repetition?**  
 
