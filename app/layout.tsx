@@ -27,13 +27,12 @@ export default function RootLayout({
               <div>Répéter</div> <div>- French language learning app -</div>
               <div>
                 <Link target="_blank" href="http://owolf.com">
-                  Built by Owolf
+                  Built by O Wolf
                 </Link>
               </div>
             </div>
             <div className="flex gap-4">
               <Link href="/">Home</Link> <Link href="/about">About</Link>{" "}
-              <Link href="/documentation">Docs</Link>{" "}
               <Link href="/contact">Contact</Link>
             </div>
           </footer>
