@@ -58,6 +58,13 @@ const NEXT_PUBLIC_RECAPTCHA_SITE_KEY =
 
 export function ContactForm() {
   const [recaptchaValue, setRecaptchaValue] = React.useState("");
+  const [recaptchaSiteKey, setRecaptchaSiteKey] = React.useState<string>("");
+
+  React.useEffect(() => {
+    console.log("recaptchaValue", recaptchaValue);
+    setRecaptchaSiteKey(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "");
+  }, [recaptchaValue]);
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -180,10 +187,12 @@ export function ContactForm() {
           className="g-recaptcha"
           data-sitekey={NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
         ></div> */}
-        <ReCAPTCHA
-          sitekey={NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
-          onChange={handleRecaptchaChange}
-        />
+        <div className="pt-4">
+          <ReCAPTCHA
+            sitekey={recaptchaSiteKey}
+            onChange={handleRecaptchaChange}
+          />
+        </div>
 
         <Button type="submit">Submit</Button>
       </form>
