@@ -7,9 +7,11 @@ let markdown = ``;
 
 function About() {
   return (
-    <div className="flex flex-col gap-4 max-w-3xl w-full pt-10 pb-24 px-4">
+    <div className="flex flex-col sm:gap-4 gap-6 max-w-3xl w-full pt-10 pb-24 px-4">
       <h1 className="text-3xl font-bold">About Répéter</h1>
-      <ReactMarkdown>{markdown}</ReactMarkdown>
+      <ReactMarkdown className="text-lg sm:text-base flex flex-col sm:gap-4 gap-6">
+        {markdown}
+      </ReactMarkdown>
     </div>
   );
 }
