@@ -84,6 +84,22 @@ const PhraseDisplay: React.FC<{}> = () => {
     console.log("currentAudioFile:", currentAudioFile);
   }, [currentAudioFile]);
 
+  const handlePreviousPhrase = () => {
+    const today = getCurrentDate();
+    const lastVisitDate = getLastVisitDate();
+    let phraseIndex = getLastPhraseIndex();
+
+    phraseIndex -= 1;
+    if (phraseIndex < 0) {
+      phraseIndex = phrases.length - 1;
+    }
+    console.log("phraseIndex", phraseIndex);
+    localStorage.setItem("lastVisitDate", today);
+    localStorage.setItem("phraseIndex", String(phraseIndex));
+
+    setPhrase(phrases[phraseIndex]);
+  };
+
   const handleNextPhrase = () => {
     const today = getCurrentDate();
     const lastVisitDate = getLastVisitDate();
@@ -123,7 +139,7 @@ const PhraseDisplay: React.FC<{}> = () => {
             <p className="text-muted-foreground">{phrase.translation}</p>
           </div>
         </CardContent>
-        <CardFooter className="flex sm:flex-row flex-col gap-6 sm:justify-between sm:items-center items-start">
+        <CardFooter className="flex md:flex-row flex-col gap-6 md:justify-between md:items-center items-start">
           {currentAudioFile.file && (
             <div>
               <AudioPlayer currentAudioFile={currentAudioFile} />
@@ -137,18 +153,23 @@ const PhraseDisplay: React.FC<{}> = () => {
             </div>
           )}
           {/* <div>{currentAudioFile.file}</div> */}
-          <div className="flex gap-4 justify-between w-full sm:w-auto">
+          <div className="flex gap-4 justify-between w-full md:w-auto">
             {/* <Button onClick={handleGetInfo} variant="outline">
               Info
             </Button> */}
             <InfoDialog phrase={phrase} />
-            <Button onClick={handleNextPhrase} variant="outline">
-              Next
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={handlePreviousPhrase} variant="outline">
+                Previous
+              </Button>
+              <Button onClick={handleNextPhrase} variant="outline">
+                Next
+              </Button>
+            </div>
           </div>
         </CardFooter>
       </Card>
-      <Counter />
+      <Counter phraseId={phrase.id} />
     </div>
   );
 };

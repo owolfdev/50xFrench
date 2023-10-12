@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ReactMarkdown from "react-markdown";
 import explanations from "@/data/french-phrase-explanations.json";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 export function InfoDialog({ phrase }: { phrase: any }) {
   const explanation = explanations.find((item) => item.id === phrase.id);
@@ -20,7 +21,9 @@ export function InfoDialog({ phrase }: { phrase: any }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Info</Button>
+        <Button className="flex gap-2" variant="outline">
+          <AiOutlineInfoCircle className="text-xl" /> Info
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] max-h-[600px] overflow-scroll">
         <DialogHeader>
