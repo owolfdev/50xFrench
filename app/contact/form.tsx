@@ -137,7 +137,11 @@ export function ContactForm() {
                 </FormControl>
                 <SelectContent>
                   {optionsForSelectType.map((option) => (
-                    <SelectItem value={option.value} key={option.value}>
+                    <SelectItem
+                      className="input-no-zoom text-lg sm:text-base"
+                      value={option.value}
+                      key={option.value}
+                    >
                       {option.label}
                     </SelectItem>
                   ))}
@@ -155,7 +159,11 @@ export function ContactForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Your email" {...field} />
+                <Input
+                  className="input-no-zoom text-lg sm:text-base"
+                  placeholder="Your email"
+                  {...field}
+                />
               </FormControl>
               <FormDescription>
                 {/* <span className="text-black">
@@ -173,7 +181,11 @@ export function ContactForm() {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Your name" {...field} />
+                <Input
+                  className="input-no-zoom text-lg sm:text-base"
+                  placeholder="Your name"
+                  {...field}
+                />
               </FormControl>
               <FormDescription>
                 {/* <span className="text-black">
@@ -191,7 +203,11 @@ export function ContactForm() {
             <FormItem>
               <FormLabel>Message</FormLabel>
               <FormControl>
-                <Textarea placeholder="Your message" {...field} />
+                <Textarea
+                  className="input-no-zoom text-lg sm:text-base"
+                  placeholder="Your message"
+                  {...field}
+                />
               </FormControl>
               <FormDescription>
                 {/* <span className="text-black">
