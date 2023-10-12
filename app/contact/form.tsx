@@ -1,10 +1,11 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import Link from "next/link";
+
 import ReCAPTCHA from "react-google-recaptcha";
 
 import { Button } from "@/components/ui/button";
@@ -31,6 +32,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string; // Supabase project URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string; // Supabase project anon key
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
 const formSchema = z.object({
   email: z.string().email().min(2, {}),
   name: z.string().min(2, {
@@ -42,9 +50,9 @@ const formSchema = z.object({
   type: z.string().min(2, {
     message: "Select a type.",
   }),
-  recaptcha: z
-    .string()
-    .min(1, { message: "Please complete the reCAPTCHA challenge." }),
+  // recaptcha: z
+  //   .string()
+  //   .min(1, { message: "Please complete the reCAPTCHA challenge." }),
 });
 
 const optionsForSelectType = [
@@ -57,13 +65,14 @@ const NEXT_PUBLIC_RECAPTCHA_SITE_KEY =
   process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
 export function ContactForm() {
-  const [recaptchaValue, setRecaptchaValue] = React.useState("");
-  const [recaptchaSiteKey, setRecaptchaSiteKey] = React.useState<string>("");
+  const [recaptchaSiteKey] = React.useState<string>(
+    process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""
+  );
 
-  React.useEffect(() => {
-    console.log("recaptchaValue", recaptchaValue);
-    setRecaptchaSiteKey(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "");
-  }, [recaptchaValue]);
+  const [isRecaptchaVerified, setIsRecaptchaVerified] =
+    React.useState<boolean>(false);
+
+  const router = useRouter();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -77,25 +86,35 @@ export function ContactForm() {
   });
 
   // 2. Handle form submission.
-  const handleSubmit = form.handleSubmit((values) => {
-    alert(JSON.stringify(values, null, 2));
-  });
+  // const handleSubmit = form.handleSubmit((values) => {
+  //   alert(JSON.stringify(values, null, 2));
+  // });
+
+  const handleRecaptchaChange = (token: string | null) => {
+    setIsRecaptchaVerified(token !== null);
+  };
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    if (!recaptchaValue) {
-      // Handle missing reCAPTCHA response
-      alert("Please complete the reCAPTCHA challenge.");
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!isRecaptchaVerified) {
+      alert("Please verify that you are not a robot.");
       return;
     }
-    values.recaptcha = recaptchaValue;
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+    try {
+      // Save the form values to the Supabase table
+      const { data, error } = await supabase
+        .from("contacts_from_repeter_app")
+        .insert([values]);
 
-  function handleRecaptchaChange(value: any) {
-    setRecaptchaValue(value);
+      if (error) throw error;
+
+      console.log("Saved to Supabase:", data);
+      router.push("/contact/thank-you");
+      // alert("Form submitted successfully!");
+    } catch (error) {
+      console.error("Error saving to Supabase:", error);
+      alert("Error submitting form. Please try again.");
+    }
   }
 
   return (
@@ -183,15 +202,14 @@ export function ContactForm() {
             </FormItem>
           )}
         />
-        {/* <div
-          className="g-recaptcha"
-          data-sitekey={NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
-        ></div> */}
+
         <div className="pt-4">
-          <ReCAPTCHA
-            sitekey={recaptchaSiteKey}
-            onChange={handleRecaptchaChange}
-          />
+          {recaptchaSiteKey && (
+            <ReCAPTCHA
+              sitekey={recaptchaSiteKey}
+              onChange={handleRecaptchaChange}
+            />
+          )}
         </div>
 
         <Button type="submit">Submit</Button>
