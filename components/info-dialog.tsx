@@ -28,9 +28,11 @@ export function InfoDialog({ phrase }: { phrase: any }) {
       <DialogContent className="sm:max-w-[600px] max-h-[600px] overflow-scroll">
         <DialogHeader>
           <DialogTitle>
-            <span className="text-2xl">About</span>
+            <span className="text-2xl">Phrase Breakdown</span>
           </DialogTitle>
-          <DialogDescription>{phrase.phrase}</DialogDescription>
+          <DialogDescription>
+            <span className="text-base">{phrase.phrase}</span>
+          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4 text-xl">
           <ReactMarkdown>{explanation?.explanation}</ReactMarkdown>
