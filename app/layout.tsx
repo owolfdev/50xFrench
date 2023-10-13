@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navigation from "@/components/navigation";
 import Link from "next/link";
+import CookieConsentComponent from "@/components/cookie-consent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,7 @@ export default function RootLayout({
           <Navigation />
           {children}
           <footer className="flex flex-col items-center p-8 gap-4">
-            <div className=" text-black opacity-80 text-sm flex gap-2 sm:flex-row flex-col items-center">
+            <div className=" text-black text-sm flex gap-2 sm:flex-row flex-col items-center">
               <div>Répéter</div> <div>- French language learning app -</div>
               <div>
                 <Link target="_blank" href="http://owolf.com">
@@ -33,8 +34,10 @@ export default function RootLayout({
             </div>
             <div className="flex gap-4">
               <Link href="/">Home</Link> <Link href="/about">About</Link>{" "}
-              <Link href="/contact">Contact</Link>
+              <Link href="/contact">Contact</Link>{" "}
+              <Link href="/privacy">Privacy</Link>
             </div>
+            <CookieConsentComponent />
           </footer>
         </main>
       </body>
