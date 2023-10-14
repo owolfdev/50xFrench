@@ -20,7 +20,9 @@ export default About;
 
 markdown = `
 
-Welcome to **Répéter**, the unique French language learning app designed to strengthen your linguistic prowess one phrase at a time. Dive deep into the heart of the French language with our daily phrases and embrace the power of repetition to engrain them into your memory.  
+Welcome to **Répéter**, the unique French language learning app designed to strengthen your linguistic prowess one phrase at a time. Dive deep into the heart of the French language with our daily phrases and embrace the power of repetition to engrain them into your memory. 
+
+In French the word *répéter* means to repeat, and that's exactly what we want you to do. We challenge you to repeat each phrase until it becomes second nature, ensuring you not only learn it but truly internalize it.
 
 **How Does Répéter Work?**
 
