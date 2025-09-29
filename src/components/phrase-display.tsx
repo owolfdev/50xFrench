@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Counter from "@/components/counter";
+import PhraseCounter from "@/components/phrase-counter";
 import { InfoDialog } from "./info-dialog";
 import AudioPlayer from "./audio-player";
 import Image from "next/image";
@@ -25,6 +26,7 @@ const PhraseDisplay: React.FC<{}> = () => {
   const [audioFiles, setAudioFiles] = useState({ message: "", data: [] });
   const [phrase, setPhrase] = useState({ id: "", phrase: "", translation: "" });
   const [currentAudioFile, setCurrentAudioFile] = useState({ file: "" });
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
 
   const initialRender = useRef(true); // Add this ref
 
@@ -66,6 +68,7 @@ const PhraseDisplay: React.FC<{}> = () => {
     }
 
     setPhrase(phrases[phraseIndex]);
+    setCurrentPhraseIndex(phraseIndex);
   }, []);
 
   useEffect(() => {
@@ -98,6 +101,7 @@ const PhraseDisplay: React.FC<{}> = () => {
     localStorage.setItem("phraseIndex", String(phraseIndex));
 
     setPhrase(phrases[phraseIndex]);
+    setCurrentPhraseIndex(phraseIndex);
   };
 
   const handleNextPhrase = () => {
@@ -114,6 +118,7 @@ const PhraseDisplay: React.FC<{}> = () => {
     localStorage.setItem("phraseIndex", String(phraseIndex));
 
     setPhrase(phrases[phraseIndex]);
+    setCurrentPhraseIndex(phraseIndex);
   };
 
   const handleGetInfo = () => {
@@ -130,7 +135,11 @@ const PhraseDisplay: React.FC<{}> = () => {
 
       <Card className="w-full">
         <CardContent>
-          <div className="pt-12 pb-6 px-4">
+          <PhraseCounter
+            currentIndex={currentPhraseIndex}
+            totalPhrases={phrases.length}
+          />
+          <div className="pt-4 pb-6 px-4">
             <p className="sm:text-3xl text-2xl font-semibold">
               {phrase.phrase}
             </p>
