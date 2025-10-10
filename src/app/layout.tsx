@@ -1,151 +1,83 @@
-import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Navigation from "@/components/navigation";
-import Link from "next/link";
-import CookieConsentComponent from "@/components/cookie-consent";
-import PWAInstallPrompt from "@/components/pwa-install-prompt";
-import PWAStatus from "@/components/pwa-status";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: "Répéter - French Language Learning",
-  description:
-    "Learn French phrases through repetition and practice. A progressive web app for French language learning.",
-  keywords: ["French", "language", "learning", "phrases", "repetition", "PWA"],
-  authors: [{ name: "O Wolf", url: "http://owolf.com" }],
-  creator: "O Wolf",
-  publisher: "O Wolf",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL("https://repeter.vercel.app"),
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: "Répéter - French Language Learning",
-    description: "Learn French phrases through repetition and practice",
-    url: "https://repeter.vercel.app",
-    siteName: "Répéter",
-    images: [
-      {
-        url: "/icons/icon-512x512.png",
-        width: 512,
-        height: 512,
-        alt: "Répéter App Icon",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Répéter - French Language Learning",
-    description: "Learn French phrases through repetition and practice",
-    images: ["/icons/icon-512x512.png"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  title: "Répéter - French Pronunciation Practice",
+  description: "Practice your French pronunciation with instant feedback",
   manifest: "/manifest.json",
-  icons: {
-    icon: [
-      { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
-    ],
-    apple: [
-      { url: "/icons/icon-152x152.png", sizes: "152x152", type: "image/png" },
-    ],
-  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
     title: "Répéter",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
+  formatDetection: {
+    telephone: false,
   },
-  themeColor: "#519ef5",
+  openGraph: {
+    type: "website",
+    siteName: "Répéter",
+    title: "Répéter - French Pronunciation Practice",
+    description: "Practice your French pronunciation with instant feedback",
+  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#3b82f6",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#519ef5" />
+        <meta name="theme-color" content="#3b82f6" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Répéter" />
-        <link rel="apple-touch-icon" href="/icons/icon-152x152.png" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="192x192"
-          href="/icons/icon-192x192.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="512x512"
-          href="/icons/icon-512x512.png"
-        />
+        <meta name="apple-touch-fullscreen" content="yes" />
+        <link rel="apple-touch-icon" href="/app-icon.png" />
+        <link rel="apple-touch-startup-image" href="/app-icon.png" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="application-name" content="Répéter" />
+        <meta name="msapplication-TileColor" content="#3b82f6" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="format-detection" content="telephone=no" />
       </head>
-      <body className={inter.className}>
-        <main className="flex min-h-screen flex-col items-center justify-between sm:px-8 p-2 bg-[#519ef5] font-mono text-sm">
-          <Navigation />
-          {children}
-          <footer className="flex flex-col items-center p-8 gap-4">
-            <div className=" text-black text-sm flex gap-2 sm:flex-row flex-col items-center">
-              <div>Répéter</div> <div>- French language learning app -</div>
-              <div>
-                <Link target="_blank" href="http://owolf.com">
-                  Built by O Wolf
-                </Link>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Link href="/">Home</Link> <Link href="/about">About</Link>{" "}
-              <Link href="/contact">Contact</Link>{" "}
-              <Link href="/privacy">Privacy</Link>
-            </div>
-            <CookieConsentComponent />
-          </footer>
-        </main>
-        <PWAStatus />
-        <PWAInstallPrompt />
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {children}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js')
-                    .then(function(registration) {
-                      console.log('SW registered: ', registration);
-                    })
-                    .catch(function(registrationError) {
-                      console.log('SW registration failed: ', registrationError);
-                    });
-                });
+                navigator.serviceWorker
+                  .register('/sw.js')
+                  .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                  })
+                  .catch(function(error) {
+                    console.error('Service Worker registration failed:', error);
+                  });
               }
             `,
           }}
