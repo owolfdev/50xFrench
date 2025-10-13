@@ -94,7 +94,9 @@ export function AuthHeader() {
               height={28}
               className="rounded-lg md:w-9 md:h-9"
             />
-            <h1 className="text-xl md:text-2xl font-bold text-white">Répéter</h1>
+            <h1 className="text-xl md:text-2xl font-bold text-white">
+              Répéter
+            </h1>
           </Link>
 
           {/* Desktop Navigation */}
@@ -172,7 +174,7 @@ export function AuthHeader() {
               >
                 Lessons
               </Link>
-              
+
               {/* Mobile Auth */}
               {!loading && !user && (
                 <div className="pt-3 border-t border-white/20 space-y-2">
@@ -196,7 +198,7 @@ export function AuthHeader() {
                   </button>
                 </div>
               )}
-              
+
               {/* Mobile User Dropdown */}
               {!loading && user && (
                 <div className="pt-3 border-t border-white/20">
