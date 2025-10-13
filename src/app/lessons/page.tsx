@@ -13,6 +13,7 @@ import {
   getLocalLessons,
   saveLesson,
   deleteLesson,
+  cleanupOrphanedSettings,
   type Lesson,
 } from "@/lib/lessons";
 
@@ -27,17 +28,34 @@ export default function LessonsPage() {
     lessonTitle: string;
   }>({ show: false, lessonId: "", lessonTitle: "" });
 
-  // Load lessons from localStorage
+  // Load lessons from localStorage - always load fresh on mount
   useEffect(() => {
-    const loadedLessons = getLocalLessons();
-    setLessons(loadedLessons);
-    setIsLoading(false);
+    const loadFreshLessons = () => {
+      const loadedLessons = getLocalLessons();
+      console.log("📚 Loaded lessons from localStorage:", loadedLessons);
+      setLessons(loadedLessons);
+      setIsLoading(false);
 
-    // Auto-select first lesson if available
-    if (loadedLessons.length > 0 && !selectedLesson) {
-      setSelectedLesson(loadedLessons[0]);
-    }
-  }, [selectedLesson]);
+      // Clean up any orphaned settings from old storage format
+      cleanupOrphanedSettings();
+
+      // Auto-select first lesson if available
+      if (loadedLessons.length > 0) {
+        const savedLessonId = localStorage.getItem("selected-lesson-id");
+        if (savedLessonId) {
+          const savedLesson = loadedLessons.find((l) => l.id === savedLessonId);
+          if (savedLesson) {
+            console.log("🔄 Restoring selected lesson:", savedLesson);
+            setSelectedLesson(savedLesson);
+            return;
+          }
+        }
+        setSelectedLesson(loadedLessons[0]);
+      }
+    };
+
+    loadFreshLessons();
+  }, []);
 
   const handleLessonGenerated = (lesson: Lesson) => {
     // Save to localStorage
@@ -62,6 +80,29 @@ export default function LessonsPage() {
     }
 
     setDeleteConfirm({ show: false, lessonId: "", lessonTitle: "" });
+  };
+
+  // Not needed anymore - settings auto-save via useEffect in LessonViewer
+
+  const handleSelectLesson = (lesson: Lesson) => {
+    console.log("🎯 Selecting lesson:", lesson.id);
+    // Always get fresh data from localStorage when selecting
+    const freshLessons = getLocalLessons();
+    const freshLesson = freshLessons.find((l) => l.id === lesson.id);
+
+    if (freshLesson) {
+      console.log("📖 Loading fresh lesson data with settings:", {
+        id: freshLesson.id,
+        title: freshLesson.title,
+        hasSettings: !!freshLesson.settings,
+        settings: freshLesson.settings,
+      });
+      setSelectedLesson(freshLesson);
+      // Save selected lesson ID for persistence
+      if (typeof window !== "undefined") {
+        localStorage.setItem("selected-lesson-id", freshLesson.id);
+      }
+    }
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -161,7 +202,7 @@ export default function LessonsPage() {
                           ? "border-[#5BA3E8] border-2 bg-[#5BA3E8]/5"
                           : "border-border"
                       }`}
-                      onClick={() => setSelectedLesson(lesson)}
+                      onClick={() => handleSelectLesson(lesson)}
                     >
                       <CardContent className="p-4">
                         <div className="space-y-2">
@@ -210,7 +251,10 @@ export default function LessonsPage() {
               {/* Lesson Viewer - Main content */}
               <div className="md:col-span-2">
                 {selectedLesson ? (
-                  <LessonViewer lesson={selectedLesson} />
+                  <LessonViewer
+                    key={selectedLesson.id}
+                    lesson={selectedLesson}
+                  />
                 ) : (
                   <Card className="p-8 text-center">
                     <CardContent className="space-y-4">

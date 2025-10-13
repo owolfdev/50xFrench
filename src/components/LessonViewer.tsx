@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Volume2, Eye, EyeOff, Loader2, Square, Repeat } from "lucide-react";
-import { Lesson } from "@/lib/lessons";
+import { Lesson, updateLessonSettings } from "@/lib/lessons";
 
 interface LessonViewerProps {
   lesson: Lesson;
@@ -18,48 +18,69 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
   const [currentPlayingIndex, setCurrentPlayingIndex] = useState<number | null>(
     null
   );
-  const [isLooping, setIsLooping] = useState(true);
-  const [enabledPhrases, setEnabledPhrases] = useState<boolean[]>(() =>
-    new Array(lesson.content.length).fill(true)
-  );
+
+  // Initialize from lesson.settings immediately to avoid flash of wrong state
+  const [isLooping, setIsLooping] = useState(() => {
+    const initial = lesson.settings?.isLooping ?? true;
+    console.log("🎬 Initial isLooping:", initial);
+    return initial;
+  });
+
+  const [enabledPhrases, setEnabledPhrases] = useState<boolean[]>(() => {
+    if (
+      lesson.settings?.enabledPhrases &&
+      lesson.settings.enabledPhrases.length === lesson.content.length
+    ) {
+      console.log(
+        "🎬 Initial load with SAVED settings:",
+        lesson.settings.enabledPhrases
+      );
+      return lesson.settings.enabledPhrases;
+    }
+    console.log("🎬 Initial load with DEFAULT settings (all enabled)");
+    return new Array(lesson.content.length).fill(true);
+  });
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const shouldStopRef = useRef(false);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const lastLessonIdRef = useRef<string | null>(null);
+  const isInitialLoadRef = useRef(true);
 
-  // Load settings from localStorage on mount and when lesson changes
+  // Update state when switching to a different lesson
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const savedEnabledKey = `lesson-enabled-${lesson.id}`;
-    const savedLoopingKey = `lesson-looping-${lesson.id}`;
-
-    try {
-      const savedEnabled = localStorage.getItem(savedEnabledKey);
-
-      if (savedEnabled) {
-        const parsed = JSON.parse(savedEnabled);
-        // Validate that the array length matches (in case lesson content changed)
-        if (Array.isArray(parsed) && parsed.length === lesson.content.length) {
-          setEnabledPhrases(parsed);
-        } else {
-          setEnabledPhrases(new Array(lesson.content.length).fill(true));
-        }
-      } else {
-        setEnabledPhrases(new Array(lesson.content.length).fill(true));
-      }
-
-      const savedLooping = localStorage.getItem(savedLoopingKey);
-      if (savedLooping !== null) {
-        setIsLooping(savedLooping === "true");
-      }
-
-      setIsInitialized(true);
-    } catch (error) {
-      console.error("Error loading lesson settings:", error);
-      setEnabledPhrases(new Array(lesson.content.length).fill(true));
-      setIsInitialized(true);
+    // Only update if the lesson actually changed
+    if (lastLessonIdRef.current === lesson.id) {
+      console.log("⏭️ Same lesson, skipping state update");
+      return;
     }
-  }, [lesson.id, lesson.content.length]);
+
+    console.log("🔄 LessonViewer: Switching to different lesson", {
+      lessonId: lesson.id,
+      lastLessonId: lastLessonIdRef.current,
+      hasSettings: !!lesson.settings,
+      settingsData: lesson.settings,
+    });
+
+    lastLessonIdRef.current = lesson.id;
+    isInitialLoadRef.current = true; // Reset flag when switching lessons
+
+    if (
+      lesson.settings?.enabledPhrases &&
+      lesson.settings.enabledPhrases.length === lesson.content.length
+    ) {
+      console.log(
+        "✅ Applying saved settings:",
+        lesson.settings.enabledPhrases
+      );
+      setEnabledPhrases(lesson.settings.enabledPhrases);
+      setIsLooping(lesson.settings.isLooping ?? true);
+    } else {
+      console.log("📝 Using default settings (all enabled)");
+      const defaultEnabled = new Array(lesson.content.length).fill(true);
+      setEnabledPhrases(defaultEnabled);
+      setIsLooping(true);
+    }
+  }, [lesson.id, lesson.settings]); // Watch lesson ID and settings
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -186,41 +207,45 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
     setCurrentPlayingIndex(null);
   };
 
+  // Sync settings to localStorage whenever they change (but not on initial load)
+  useEffect(() => {
+    // Skip auto-save on initial mount/load
+    if (isInitialLoadRef.current) {
+      console.log("🚫 Skipping auto-save on initial load");
+      isInitialLoadRef.current = false;
+      return;
+    }
+
+    if (enabledPhrases.length > 0) {
+      console.log("💾 Auto-saving settings to localStorage:", {
+        lessonId: lesson.id,
+        enabledPhrases,
+        isLooping,
+      });
+      updateLessonSettings(lesson.id, {
+        enabledPhrases,
+        isLooping,
+      });
+    }
+  }, [enabledPhrases, isLooping, lesson.id]);
+
   const togglePhrase = (index: number) => {
+    console.log("☑️ Toggling phrase:", index);
     const newEnabled = [...enabledPhrases];
     newEnabled[index] = !newEnabled[index];
     setEnabledPhrases(newEnabled);
-
-    // Save to localStorage
-    if (typeof window !== "undefined") {
-      localStorage.setItem(
-        `lesson-enabled-${lesson.id}`,
-        JSON.stringify(newEnabled)
-      );
-    }
   };
 
   const toggleAllPhrases = (enabled: boolean) => {
+    console.log("☑️ Toggle all phrases:", enabled);
     const newEnabled = new Array(lesson.content.length).fill(enabled);
     setEnabledPhrases(newEnabled);
-
-    // Save to localStorage
-    if (typeof window !== "undefined") {
-      localStorage.setItem(
-        `lesson-enabled-${lesson.id}`,
-        JSON.stringify(newEnabled)
-      );
-    }
   };
 
   const toggleLooping = () => {
+    console.log("🔁 Toggling looping");
     const newLooping = !isLooping;
     setIsLooping(newLooping);
-
-    // Save to localStorage
-    if (typeof window !== "undefined") {
-      localStorage.setItem(`lesson-looping-${lesson.id}`, String(newLooping));
-    }
   };
 
   const enabledCount = enabledPhrases.filter(Boolean).length;

@@ -8,6 +8,11 @@ export interface LessonLine {
   english: string;
 }
 
+export interface LessonSettings {
+  enabledPhrases: boolean[];
+  isLooping: boolean;
+}
+
 export interface Lesson {
   id: string;
   title: string;
@@ -16,6 +21,7 @@ export interface Lesson {
   content: LessonLine[];
   created_at: string;
   is_generated?: boolean; // true if AI-generated
+  settings?: LessonSettings; // Lesson-specific settings
 }
 
 const LESSONS_STORAGE_KEY = "repeter-lessons";
@@ -101,4 +107,66 @@ export function getLessonCountByDifficulty(
 ): number {
   const lessons = getLocalLessons();
   return lessons.filter((l) => l.difficulty === difficulty).length;
+}
+
+/**
+ * Update lesson settings
+ */
+export function updateLessonSettings(
+  lessonId: string,
+  settings: LessonSettings
+): void {
+  if (typeof window === "undefined") return;
+
+  try {
+    const lessons = getLocalLessons();
+    const lessonIndex = lessons.findIndex((l) => l.id === lessonId);
+
+    if (lessonIndex >= 0) {
+      lessons[lessonIndex].settings = settings;
+      localStorage.setItem(LESSONS_STORAGE_KEY, JSON.stringify(lessons));
+    }
+  } catch (error) {
+    console.error("Error updating lesson settings:", error);
+    throw error;
+  }
+}
+
+/**
+ * Clean up orphaned lesson settings from old storage format
+ */
+export function cleanupOrphanedSettings(): void {
+  if (typeof window === "undefined") return;
+
+  try {
+    const lessons = getLocalLessons();
+    const validLessonIds = new Set(lessons.map((l) => l.id));
+
+    // Find and remove orphaned settings
+    const keysToRemove: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (
+        key &&
+        (key.startsWith("lesson-enabled-") || key.startsWith("lesson-looping-"))
+      ) {
+        const lessonId = key
+          .replace("lesson-enabled-", "")
+          .replace("lesson-looping-", "");
+        if (!validLessonIds.has(lessonId)) {
+          keysToRemove.push(key);
+        }
+      }
+    }
+
+    keysToRemove.forEach((key) => localStorage.removeItem(key));
+
+    if (keysToRemove.length > 0) {
+      console.log(
+        `🧹 Cleaned up ${keysToRemove.length} orphaned lesson settings`
+      );
+    }
+  } catch (error) {
+    console.error("Error cleaning up orphaned settings:", error);
+  }
 }
