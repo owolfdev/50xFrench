@@ -7,7 +7,6 @@ import { UserDropdown } from "@/components/user-dropdown";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { isPWA } from "@/lib/pwa-utils";
 
 export function AuthHeader() {
   const [user, setUser] = useState<User | null>(null);

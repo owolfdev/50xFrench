@@ -14,7 +14,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { isPWA } from "@/lib/pwa-utils";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");

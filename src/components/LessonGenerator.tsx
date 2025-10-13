@@ -249,7 +249,7 @@ export default function LessonGenerator({
             <p>
               • They use repetition to drill specific words, verbs, or patterns
             </p>
-            <p>• Generated lessons are saved to your browser's local storage</p>
+            <p>• Generated lessons are saved to your browser&apos;s local storage</p>
             <p>• You can delete them anytime from the lessons page</p>
           </div>
         </CardContent>

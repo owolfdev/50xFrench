@@ -80,7 +80,7 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
       setEnabledPhrases(defaultEnabled);
       setIsLooping(true);
     }
-  }, [lesson.id, lesson.settings]); // Watch lesson ID and settings
+  }, [lesson.id, lesson.settings, lesson.content.length]); // Watch lesson ID, settings, and content length
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -102,7 +102,6 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
     shouldStopRef.current = false;
 
     try {
-      // eslint-disable-next-line no-constant-condition
       while (true) {
         // Play each enabled line sequentially with pauses
         for (let i = 0; i < lesson.content.length; i++) {
