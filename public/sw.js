@@ -1,6 +1,6 @@
 // Minimal service worker - matching working example
-const CACHE_NAME = "pwa-test-cache-v1";
-const urlsToCache = ["/", "/docs", "/blog", "/contact"];
+const CACHE_NAME = "pwa-test-cache-v2"; // Increment when making changes
+const urlsToCache = ["/", "/docs", "/blog", "/contact", "/lessons"];
 
 // Install event - cache resources
 self.addEventListener("install", (event) => {
@@ -30,29 +30,47 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event - network first for development, with smart caching
 self.addEventListener("fetch", (event) => {
+  const url = new URL(event.request.url);
+  
+  // Skip caching for:
+  // - API routes
+  // - Hot reload (HMR) requests
+  // - Next.js internal routes
+  // - Localhost assets during development
+  if (
+    url.pathname.startsWith("/api/") ||
+    url.pathname.startsWith("/_next/") ||
+    url.pathname.includes("hot-update") ||
+    url.pathname.includes("webpack") ||
+    event.request.method !== "GET"
+  ) {
+    return event.respondWith(fetch(event.request));
+  }
+
+  // Network-first strategy for everything else (better for development)
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      // Cache hit - return response
-      if (response) {
-        return response;
-      }
-      return fetch(event.request).then((response) => {
+    fetch(event.request)
+      .then((response) => {
         // Check if valid response
         if (!response || response.status !== 200 || response.type !== "basic") {
           return response;
         }
 
-        // Clone the response
+        // Clone and cache the response
         const responseToCache = response.clone();
-
         caches.open(CACHE_NAME).then((cache) => {
           cache.put(event.request, responseToCache);
         });
 
         return response;
-      });
-    })
+      })
+      .catch(() => {
+        // Network failed, try cache
+        return caches.match(event.request).then((response) => {
+          return response || new Response("Offline - resource not cached");
+        });
+      })
   );
 });
