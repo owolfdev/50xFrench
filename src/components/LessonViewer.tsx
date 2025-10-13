@@ -327,7 +327,7 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
             {showTranslations ? "Hide" : "Show"} Translations
           </Button>
 
-          <div className="flex gap-2 ml-auto">
+          <div className="flex gap-2 md:ml-auto">
             <Button
               variant="outline"
               size="sm"
