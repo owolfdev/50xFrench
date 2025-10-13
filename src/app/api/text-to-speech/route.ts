@@ -33,7 +33,7 @@ if (fs.existsSync(credentialsPath)) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { text } = await request.json();
+    const { text, speakingRate } = await request.json();
 
     console.log(
       "🎵 [TTS] Received request for text:",
@@ -44,6 +44,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Text is required" }, { status: 400 });
     }
 
+    // Use custom speaking rate or default to 0.7
+    const rate = speakingRate !== undefined ? speakingRate : 0.7;
+
     // TTS Request Configuration
     const requestPayload = {
       input: { text },
@@ -53,7 +56,7 @@ export async function POST(request: NextRequest) {
       },
       audioConfig: {
         audioEncoding: "MP3" as const,
-        speakingRate: 0.7, // Slower for pronunciation practice
+        speakingRate: rate, // Configurable speaking rate
         pitch: 0.0,
       },
     };

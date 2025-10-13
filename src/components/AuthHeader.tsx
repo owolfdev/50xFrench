@@ -75,6 +75,23 @@ export function AuthHeader() {
           />
           <h1 className="text-xl md:text-2xl font-bold text-white">Répéter</h1>
         </Link>
+
+        {/* Navigation Links */}
+        <nav className="flex items-center gap-4 md:gap-6">
+          <Link
+            href="/"
+            className="text-white/80 hover:text-white text-sm md:text-base transition-colors font-medium"
+          >
+            Practice
+          </Link>
+          <Link
+            href="/lessons"
+            className="text-white/80 hover:text-white text-sm md:text-base transition-colors font-medium"
+          >
+            Lessons
+          </Link>
+        </nav>
+
         <div className="flex items-center gap-3">
           {loading ? (
             <div className="w-8 h-8 bg-white/20 rounded animate-pulse" />
