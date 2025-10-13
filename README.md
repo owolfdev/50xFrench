@@ -20,6 +20,19 @@ A Next.js web application that helps users practice French pronunciation using G
 - **Category-based Learning**: Phrases organized by categories (greetings, restaurant, business, etc.)
 - **Real-time Scoring**: Immediate feedback with similarity percentage
 
+### Lessons Feature 🎓
+
+- **Comprehensive Drilling Lessons**: Text-based lessons that progressively build complexity
+- **AI-Generated Content**: Create custom lessons on any French topic using OpenAI
+- **Progressive Learning**: Lessons start with short simple phrases and build to complex sentences
+- **Text-to-Speech Integration**: Listen to entire lessons with French Neural2 voice
+- **Selective Playback**: Toggle individual phrases on/off with checkboxes
+- **Looping Mode**: Continuous playback with automatic restart for repetitive practice
+- **Translation Toggle**: Show/hide English translations as needed
+- **Persistent Settings**: Checkbox states and playback preferences saved per lesson
+- **Slower Speech**: Lessons play at 0.55x speed (45% slower) with 2.5 second pauses between phrases
+- **Local Storage**: All lessons and settings stored in browser localStorage
+
 ### Technical Features
 
 - **Multi-format Audio Support**: Supports WebM, MP4, MP3, WAV, FLAC, and OGG formats
@@ -99,6 +112,29 @@ interface FrenchPhrase {
 }
 ```
 
+### French Lessons
+
+```typescript
+interface Lesson {
+  id: string;
+  title: string;
+  topic: string; // e.g., "avoir", "aller", "definite articles"
+  difficulty: "beginner" | "intermediate" | "advanced";
+  content: LessonLine[];
+  created_at: string;
+  is_generated?: boolean;
+  settings?: {
+    enabledPhrases: boolean[];
+    isLooping: boolean;
+  };
+}
+
+interface LessonLine {
+  french: string;
+  english: string;
+}
+```
+
 ### Pronunciation Results
 
 ```typescript
@@ -115,8 +151,9 @@ interface PronunciationResult {
 ### Prerequisites
 
 - Node.js 18+
-- Google Cloud Platform account with Speech-to-Text API enabled
-- Google Cloud service account with Speech-to-Text permissions
+- Google Cloud Platform account with Speech-to-Text API and Text-to-Speech API enabled
+- Google Cloud service account with appropriate permissions
+- OpenAI API key (for AI lesson and phrase generation features)
 
 ### Installation
 
@@ -149,7 +186,15 @@ interface PronunciationResult {
    export GOOGLE_CLOUD_PROJECT_ID="your-project-id"
    ```
 
-4. **Run the development server**
+4. **OpenAI Setup** (for AI lesson/phrase generation)
+
+   ```bash
+   export OPENAI_API_KEY="sk-proj-your-openai-api-key"
+   ```
+
+   Get your API key from [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+
+5. **Run the development server**
 
    ```bash
    npm run dev

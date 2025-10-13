@@ -21,9 +21,7 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
 
   // Initialize from lesson.settings immediately to avoid flash of wrong state
   const [isLooping, setIsLooping] = useState(() => {
-    const initial = lesson.settings?.isLooping ?? true;
-    console.log("🎬 Initial isLooping:", initial);
-    return initial;
+    return lesson.settings?.isLooping ?? true;
   });
 
   const [enabledPhrases, setEnabledPhrases] = useState<boolean[]>(() => {
@@ -197,16 +195,20 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
       }
     } catch (error) {
       console.error("TTS error:", error);
-      
+
       // More helpful error message for mobile users
       const errorMsg = error instanceof Error ? error.message : "Unknown error";
-      if (errorMsg.includes("user agent") || errorMsg.includes("denied permission")) {
+      if (
+        errorMsg.includes("user agent") ||
+        errorMsg.includes("denied permission")
+      ) {
         alert(
           "Audio playback blocked. On mobile:\n\n" +
-          "1. Make sure you're using HTTPS\n" +
-          "2. Allow audio in your browser settings\n" +
-          "3. Try tapping the Play button again\n\n" +
-          "Error: " + errorMsg
+            "1. Make sure you're using HTTPS\n" +
+            "2. Allow audio in your browser settings\n" +
+            "3. Try tapping the Play button again\n\n" +
+            "Error: " +
+            errorMsg
         );
       } else {
         alert(`Failed to generate audio: ${errorMsg}`);
@@ -234,17 +236,11 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
   useEffect(() => {
     // Skip auto-save on initial mount/load
     if (isInitialLoadRef.current) {
-      console.log("🚫 Skipping auto-save on initial load");
       isInitialLoadRef.current = false;
       return;
     }
 
     if (enabledPhrases.length > 0) {
-      console.log("💾 Auto-saving settings to localStorage:", {
-        lessonId: lesson.id,
-        enabledPhrases,
-        isLooping,
-      });
       updateLessonSettings(lesson.id, {
         enabledPhrases,
         isLooping,
@@ -253,20 +249,17 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
   }, [enabledPhrases, isLooping, lesson.id]);
 
   const togglePhrase = (index: number) => {
-    console.log("☑️ Toggling phrase:", index);
     const newEnabled = [...enabledPhrases];
     newEnabled[index] = !newEnabled[index];
     setEnabledPhrases(newEnabled);
   };
 
   const toggleAllPhrases = (enabled: boolean) => {
-    console.log("☑️ Toggle all phrases:", enabled);
     const newEnabled = new Array(lesson.content.length).fill(enabled);
     setEnabledPhrases(newEnabled);
   };
 
   const toggleLooping = () => {
-    console.log("🔁 Toggling looping");
     const newLooping = !isLooping;
     setIsLooping(newLooping);
   };

@@ -32,7 +32,6 @@ export default function LessonsPage() {
   useEffect(() => {
     const loadFreshLessons = () => {
       const loadedLessons = getLocalLessons();
-      console.log("📚 Loaded lessons from localStorage:", loadedLessons);
       setLessons(loadedLessons);
       setIsLoading(false);
 
@@ -45,7 +44,6 @@ export default function LessonsPage() {
         if (savedLessonId) {
           const savedLesson = loadedLessons.find((l) => l.id === savedLessonId);
           if (savedLesson) {
-            console.log("🔄 Restoring selected lesson:", savedLesson);
             setSelectedLesson(savedLesson);
             return;
           }
@@ -85,18 +83,11 @@ export default function LessonsPage() {
   // Not needed anymore - settings auto-save via useEffect in LessonViewer
 
   const handleSelectLesson = (lesson: Lesson) => {
-    console.log("🎯 Selecting lesson:", lesson.id);
     // Always get fresh data from localStorage when selecting
     const freshLessons = getLocalLessons();
     const freshLesson = freshLessons.find((l) => l.id === lesson.id);
-
+    
     if (freshLesson) {
-      console.log("📖 Loading fresh lesson data with settings:", {
-        id: freshLesson.id,
-        title: freshLesson.title,
-        hasSettings: !!freshLesson.settings,
-        settings: freshLesson.settings,
-      });
       setSelectedLesson(freshLesson);
       // Save selected lesson ID for persistence
       if (typeof window !== "undefined") {
