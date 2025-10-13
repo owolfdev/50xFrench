@@ -1,5 +1,7 @@
 # French Pronunciation Practice App
 
+test
+
 A Next.js web application that helps users practice French pronunciation using Google Speech-to-Text API. The app provides real-time audio recording, speech transcription, and intelligent feedback on pronunciation accuracy.
 
 ## 🎯 Features

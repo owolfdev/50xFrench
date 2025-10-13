@@ -33,7 +33,7 @@ self.addEventListener("activate", (event) => {
 // Fetch event - network first for development, with smart caching
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
-  
+
   // Skip caching for:
   // - API routes
   // - Hot reload (HMR) requests
