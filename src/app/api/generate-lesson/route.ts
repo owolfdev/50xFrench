@@ -10,9 +10,9 @@ export async function POST(request: NextRequest) {
     if (!process.env.OPENAI_API_KEY) {
       console.error("❌ OPENAI_API_KEY not found in environment variables");
       return NextResponse.json(
-        { 
+        {
           error: "OpenAI API key not configured",
-          details: "Please add OPENAI_API_KEY to your environment variables"
+          details: "Please add OPENAI_API_KEY to your environment variables",
         },
         { status: 500 }
       );
@@ -79,7 +79,7 @@ IMPORTANT:
 - Make it comprehensive and drill-focused`;
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-3.5-turbo", // Use same model as phrase generation for consistency
       messages: [
         { role: "system", content: systemPrompt },
         {
