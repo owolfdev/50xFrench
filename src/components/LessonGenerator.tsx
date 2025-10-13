@@ -74,7 +74,9 @@ export default function LessonGenerator({
       });
 
       if (!response.ok) {
-        throw new Error("Failed to generate lesson");
+        const errorData = await response.json();
+        console.error("❌ API Error:", errorData);
+        throw new Error(errorData.details || errorData.error || "Failed to generate lesson");
       }
 
       const data = await response.json();

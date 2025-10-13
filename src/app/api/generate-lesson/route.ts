@@ -5,12 +5,24 @@ import OpenAI from "openai";
 export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
-  // Initialize OpenAI client here to avoid build-time issues
-  const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-
   try {
+    // Check if API key exists
+    if (!process.env.OPENAI_API_KEY) {
+      console.error("❌ OPENAI_API_KEY not found in environment variables");
+      return NextResponse.json(
+        { 
+          error: "OpenAI API key not configured",
+          details: "Please add OPENAI_API_KEY to your environment variables"
+        },
+        { status: 500 }
+      );
+    }
+
+    // Initialize OpenAI client here to avoid build-time issues
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     const { prompt, difficulty = "beginner" } = await request.json();
 
     if (!prompt || typeof prompt !== "string") {
