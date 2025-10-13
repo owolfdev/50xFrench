@@ -86,7 +86,7 @@ export default function LessonsPage() {
     // Always get fresh data from localStorage when selecting
     const freshLessons = getLocalLessons();
     const freshLesson = freshLessons.find((l) => l.id === lesson.id);
-    
+
     if (freshLesson) {
       setSelectedLesson(freshLesson);
       // Save selected lesson ID for persistence

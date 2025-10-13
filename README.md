@@ -200,7 +200,7 @@ interface PronunciationResult {
    npm run dev
    ```
 
-5. **Open your browser**
+6. **Open your browser**
    Navigate to `http://localhost:3000`
 
 ## 🔧 Configuration
