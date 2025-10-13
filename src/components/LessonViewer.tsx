@@ -98,6 +98,10 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
   const handlePlayLesson = async () => {
     if (isLoading || isPlaying) return;
 
+    // Create audio element in direct response to user click (for mobile compatibility)
+    const audio = new Audio();
+    audioRef.current = audio;
+
     setIsPlaying(true);
     shouldStopRef.current = false;
 
@@ -142,20 +146,31 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
 
           // Play the audio and wait for it to finish
           await new Promise<void>((resolve, reject) => {
-            const audio = new Audio(url);
-            audioRef.current = audio;
+            // Reuse the same audio element (created in user gesture context)
+            if (!audioRef.current) {
+              reject(new Error("Audio element not available"));
+              return;
+            }
 
-            audio.onended = () => {
+            const currentAudio = audioRef.current;
+            currentAudio.src = url;
+
+            currentAudio.onended = () => {
               URL.revokeObjectURL(url);
               resolve();
             };
 
-            audio.onerror = () => {
+            currentAudio.onerror = () => {
               URL.revokeObjectURL(url);
               reject(new Error("Failed to play audio"));
             };
 
-            audio.play().catch(reject);
+            // Load and play
+            currentAudio.load();
+            currentAudio.play().catch((err) => {
+              console.error("Play error:", err);
+              reject(err);
+            });
           });
 
           // Check again before pause
@@ -182,11 +197,20 @@ export default function LessonViewer({ lesson }: LessonViewerProps) {
       }
     } catch (error) {
       console.error("TTS error:", error);
-      alert(
-        `Failed to generate audio: ${
-          error instanceof Error ? error.message : "Unknown error"
-        }`
-      );
+      
+      // More helpful error message for mobile users
+      const errorMsg = error instanceof Error ? error.message : "Unknown error";
+      if (errorMsg.includes("user agent") || errorMsg.includes("denied permission")) {
+        alert(
+          "Audio playback blocked. On mobile:\n\n" +
+          "1. Make sure you're using HTTPS\n" +
+          "2. Allow audio in your browser settings\n" +
+          "3. Try tapping the Play button again\n\n" +
+          "Error: " + errorMsg
+        );
+      } else {
+        alert(`Failed to generate audio: ${errorMsg}`);
+      }
     } finally {
       setIsPlaying(false);
       setIsLoading(false);
