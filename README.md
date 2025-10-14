@@ -1,6 +1,6 @@
-# French Pronunciation Practice App
+# Répéter - French Pronunciation Practice App
 
-A Next.js web application that helps users practice French pronunciation using Google Speech-to-Text API. The app provides real-time audio recording, speech transcription, and intelligent feedback on pronunciation accuracy.
+A comprehensive Next.js web application that helps users practice French pronunciation using advanced AI technology. The app provides real-time audio recording, speech transcription, intelligent feedback, and personalized learning experiences.
 
 ## 🎯 Features
 
@@ -33,12 +33,34 @@ A Next.js web application that helps users practice French pronunciation using G
 - **Slower Speech**: Lessons play at 0.55x speed (45% slower) with 2.5 second pauses between phrases
 - **Local Storage**: All lessons and settings stored in browser localStorage
 
+### User Management & Authentication
+
+- **Secure Authentication**: Supabase-powered user authentication system
+- **User Profiles**: Personalized experience with saved progress and preferences
+- **Progress Tracking**: Track your learning journey and improvement over time
+- **Cross-device Sync**: Access your progress from any device
+
+### Progressive Web App (PWA)
+
+- **Install Anywhere**: Add to home screen on mobile devices or install as desktop app
+- **Offline Capability**: Practice with cached phrases and review previous sessions
+- **Native App Experience**: Fast, responsive interface that feels like a native app
+- **Push Notifications**: Stay motivated with practice reminders (coming soon)
+
+### AI-Powered Learning
+
+- **Custom Phrase Generation**: Generate personalized French phrases using OpenAI GPT-4
+- **AI Lesson Creation**: Create comprehensive drilling lessons on any French topic
+- **Smart Difficulty Assessment**: AI automatically assesses phrase difficulty levels
+- **Contextual Learning**: Generate phrases based on specific grammar patterns or situations
+
 ### Technical Features
 
 - **Multi-format Audio Support**: Supports WebM, MP4, MP3, WAV, FLAC, and OGG formats
 - **Mobile Compatible**: Optimized for mobile devices with proper MIME type handling
 - **File Upload Testing**: Upload audio files to test Google Speech-to-Text functionality
 - **Responsive Design**: Modern UI with dark/light mode support
+- **Database Integration**: Supabase-powered data management with real-time updates
 
 ## 🏗️ Architecture
 
@@ -55,6 +77,9 @@ A Next.js web application that helps users practice French pronunciation using G
 
 - **Speech Processing**: Google Cloud Speech-to-Text API integration
 - **Text-to-Speech**: Google Cloud Text-to-Speech API with Neural2 voices
+- **AI Integration**: OpenAI GPT-4 for phrase and lesson generation
+- **Authentication**: Supabase authentication and user management
+- **Database Operations**: Supabase database integration for data persistence
 - **Audio Format Detection**: Automatic MIME type detection and encoding
 - **Error Handling**: Comprehensive error handling and logging
 - **Development/Production**: Dual credential system (JSON file vs environment variables)
@@ -89,14 +114,35 @@ Text analysis utilities:
 - Similarity scoring
 - Feedback generation
 
-#### API Route (`/api/speech-to-text/route.ts`)
+#### API Routes
 
-Backend processing:
+**`/api/speech-to-text/route.ts`**
 
 - Google Cloud Speech-to-Text integration
 - Multi-format audio support
 - Confidence scoring
 - Error handling and logging
+
+**`/api/generate-phrases/route.ts`**
+
+- OpenAI GPT-4 integration for phrase generation
+- Custom topic-based phrase creation
+- Structured data validation
+- Local storage integration
+
+**`/api/generate-lesson/route.ts`**
+
+- AI-powered lesson generation
+- Progressive difficulty building
+- Comprehensive drilling content
+- JSON-structured lesson output
+
+**`/api/text-to-speech/route.ts`**
+
+- Google Cloud TTS integration
+- High-quality French Neural2 voices
+- Multiple voice options
+- Audio format optimization
 
 ## 📊 Data Structure
 
@@ -153,6 +199,7 @@ interface PronunciationResult {
 - Node.js 18+
 - Google Cloud Platform account with Speech-to-Text API and Text-to-Speech API enabled
 - Google Cloud service account with appropriate permissions
+- Supabase account (for authentication and database)
 - OpenAI API key (for AI lesson and phrase generation features)
 
 ### Installation
@@ -186,7 +233,16 @@ interface PronunciationResult {
    export GOOGLE_CLOUD_PROJECT_ID="your-project-id"
    ```
 
-4. **OpenAI Setup** (for AI lesson/phrase generation)
+4. **Supabase Setup** (for authentication and database)
+
+   ```bash
+   export NEXT_PUBLIC_SUPABASE_URL="your-supabase-project-url"
+   export NEXT_PUBLIC_SUPABASE_ANON_KEY="your-supabase-anon-key"
+   ```
+
+   Get these from your Supabase project dashboard under Settings > API
+
+5. **OpenAI Setup** (for AI lesson/phrase generation)
 
    ```bash
    export OPENAI_API_KEY="sk-proj-your-openai-api-key"
@@ -194,13 +250,13 @@ interface PronunciationResult {
 
    Get your API key from [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
 
-5. **Run the development server**
+6. **Run the development server**
 
    ```bash
    npm run dev
    ```
 
-6. **Open your browser**
+7. **Open your browser**
    Navigate to `http://localhost:3000`
 
 ## 🔧 Configuration
@@ -357,6 +413,20 @@ GOOGLE_CLOUD_PROJECT_ID
 ```
 
 **Note**: TTS uses the same Google Cloud credentials as STT. No additional environment variables are needed.
+
+## 📚 Documentation
+
+Comprehensive documentation is available in the `/docs` folder:
+
+- **[Setup Guide](./docs/SETUP.md)** - Complete development environment setup
+- **[Deployment Guide](./docs/DEPLOYMENT.md)** - Production deployment instructions
+- **[Features Overview](./docs/FEATURES.md)** - Detailed feature documentation
+- **[Supabase Setup](./docs/SUPABASE_SETUP.md)** - Database and authentication setup
+- **[Documentation Index](./docs/README.md)** - Complete documentation overview
+
+### In-App Documentation
+
+User-facing documentation is available within the app at `/docs` - a comprehensive help system covering all features and usage guides.
 
 ## 📝 License
 

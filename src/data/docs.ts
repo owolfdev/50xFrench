@@ -155,13 +155,20 @@ Some features work without internet:
 - Works on any screen size
 - Native app-like feel
 
+## Advanced Features
+
+- **AI Lesson Generation** - Create comprehensive drilling lessons on any French topic
+- **Progressive Learning** - Lessons that start simple and build complexity
+- **Custom Phrase Sets** - Generate and manage your own phrase collections
+- **Local Storage** - All generated content persists in your browser
+- **Real-time Feedback** - Instant pronunciation scoring and suggestions
+
 ## Coming Soon
 
 - Progress tracking and statistics
-- Custom phrase collections
-- Difficulty levels
 - Practice streaks and goals
-- Community features`,
+- Community features
+- Advanced analytics`,
   },
   {
     slug: "phrase-library",
@@ -289,10 +296,110 @@ Powered by **OpenAI's GPT models**, the phrase generator:
 The AI generator is a powerful tool for targeted practice on exactly what you need to learn!`,
   },
   {
+    slug: "ai-lesson-generation",
+    title: "AI Lesson Generation",
+    category: "Using Répéter",
+    order: 6,
+    excerpt:
+      "Create comprehensive drilling lessons with AI-powered content generation.",
+    content: `Generate custom French lessons that progressively build from simple to complex phrases using AI.
+
+## What are AI Lessons?
+
+AI lessons are comprehensive drilling sessions that:
+- Start with very short, simple phrases (2-4 words)
+- Progressively build to longer, complex sentences (15-25 words)
+- Focus on repetition and drilling of specific grammar patterns
+- Provide structured learning progression
+
+## How to Generate Lessons
+
+1. Click the **"Generate Lesson"** button
+2. Enter a topic (e.g., "avoir verb", "past tense", "subjunctive mood")
+3. Choose difficulty level (Beginner, Intermediate, Advanced)
+4. Click generate and wait for AI to create your lesson
+
+## Lesson Structure
+
+Each lesson contains:
+- **Progressive Content** - 15-20+ phrases that build complexity
+- **Target Topic** - Focused on your chosen grammar point
+- **Difficulty Appropriate** - Matched to your selected level
+- **French + English** - Both original and translation provided
+
+## Example Topics
+
+### Grammar Patterns
+- "avoir verb conjugation"
+- "passé composé vs imparfait"
+- "subjunctive mood"
+- "conditional sentences"
+
+### Vocabulary Themes
+- "restaurant vocabulary"
+- "travel phrases"
+- "business expressions"
+- "daily routine"
+
+### Specific Skills
+- "asking questions"
+- "making requests"
+- "expressing opinions"
+- "describing past events"
+
+## Lesson Features
+
+### Text-to-Speech Integration
+- Listen to entire lessons with French Neural2 voice
+- Slower speech (0.55x speed) for better comprehension
+- 2.5-second pauses between phrases
+
+### Interactive Controls
+- **Selective Playback** - Toggle individual phrases on/off
+- **Looping Mode** - Continuous playback for repetitive practice
+- **Translation Toggle** - Show/hide English translations
+- **Persistent Settings** - Your preferences saved per lesson
+
+### Local Storage
+- All lessons stored in your browser
+- Settings persist across sessions
+- No account required for lesson generation
+
+## Best Practices
+
+1. **Start Simple** - Choose beginner level for new topics
+2. **Focus on Repetition** - Use looping mode for drilling
+3. **Practice Regularly** - Return to lessons for reinforcement
+4. **Mix Topics** - Generate lessons on different grammar points
+
+## Tips for Effective Lessons
+
+- **Be Specific** - "avoir in present tense" vs just "avoir"
+- **Include Context** - "avoir in daily routine" for practical use
+- **Request Examples** - Ask for specific situations or contexts
+- **Vary Difficulty** - Try different levels for the same topic
+
+## Example Lesson Prompts
+
+- "avoir verb in present tense for daily routine"
+- "past tense expressions for travel stories"
+- "subjunctive mood in polite requests"
+- "conditional sentences for hypothetical situations"
+
+## Limitations
+
+- Requires internet connection for generation
+- Lessons generated locally (not shared between devices)
+- AI quality depends on prompt clarity
+- Review content for accuracy
+
+AI lessons provide structured, progressive practice perfect for mastering specific French grammar patterns!`,
+  },
+  {
     slug: "pwa-installation",
     title: "PWA Installation",
     category: "Using Répéter",
-    order: 6,
+    order: 7,
     excerpt: "Install Répéter as a Progressive Web App on your device.",
     content: `Install Répéter as an app on your phone, tablet, or desktop for the best experience.
 
@@ -377,10 +484,154 @@ When installed and offline, you can:
 Enjoy the native app experience! 📱`,
   },
   {
+    slug: "authentication",
+    title: "User Accounts & Authentication",
+    category: "Using Répéter",
+    order: 8,
+    excerpt:
+      "Learn about user accounts, authentication, and personalized features.",
+    content: `Create an account to unlock personalized features and save your progress across devices.
+
+## Why Create an Account?
+
+With a Répéter account, you get:
+- **Progress Tracking** - Save your practice history and improvement over time
+- **Cross-Device Sync** - Access your progress from any device
+- **Personalized Experience** - Customized recommendations and settings
+- **Data Backup** - Never lose your practice history
+- **Future Features** - Access to upcoming premium features
+
+## Creating an Account
+
+### Sign Up Process
+1. Click **"Sign Up"** on the login page
+2. Enter your email address
+3. Create a secure password
+4. Verify your email address
+5. Start practicing with your new account
+
+### Email Verification
+- Check your inbox for verification email
+- Click the verification link
+- If you don't see it, check spam folder
+- You can request a new verification email
+
+## Signing In
+
+### Regular Login
+1. Go to the login page
+2. Enter your email and password
+3. Click "Sign In"
+4. You'll be redirected to your personalized dashboard
+
+### Forgot Password
+1. Click "Forgot Password" on login page
+2. Enter your email address
+3. Check email for reset link
+4. Create new password
+5. Sign in with new credentials
+
+## Account Management
+
+### Profile Settings
+- Update email address
+- Change password
+- Manage notification preferences
+- Export your data
+
+### Data Export
+- Download your practice history
+- Export generated phrases and lessons
+- Backup your progress data
+
+### Account Deletion
+- Delete your account permanently
+- Remove all associated data
+- Cannot be undone - be sure before deleting
+
+## Security Features
+
+### Password Requirements
+- Minimum 8 characters
+- Mix of letters, numbers, and symbols
+- Cannot be common passwords
+
+### Session Management
+- Secure session tokens
+- Automatic logout after inactivity
+- Sign out from all devices option
+
+### Data Protection
+- Encrypted password storage
+- Secure authentication with Supabase
+- No plaintext password storage
+- Industry-standard security practices
+
+## Guest vs Account Users
+
+### Guest Users (No Account)
+- Can use all core features
+- Generated content saved locally
+- Progress not saved between devices
+- Limited to browser storage
+
+### Account Users
+- All guest features plus:
+- Cross-device progress sync
+- Cloud backup of practice history
+- Personalized recommendations
+- Future premium features
+
+## Privacy & Data
+
+### What We Store
+- Email address (for login)
+- Practice history and progress
+- Generated phrases and lessons
+- Account preferences
+
+### What We Don't Store
+- Audio recordings (processed and deleted)
+- Personal conversations
+- Location data
+- Contact information
+
+### Data Control
+- Access your data anytime
+- Export everything you've created
+- Delete your account and data
+- Control what information is stored
+
+## Troubleshooting
+
+### Can't Sign In
+1. Check email and password
+2. Verify email is confirmed
+3. Try password reset
+4. Clear browser cache
+5. Try different browser
+
+### Email Issues
+1. Check spam/junk folder
+2. Verify email address is correct
+3. Wait a few minutes for delivery
+4. Try requesting new email
+5. Check email provider settings
+
+### Account Problems
+- Contact support if issues persist
+- Provide specific error messages
+- Include what you were trying to do
+
+**Support:** support@repeter.app
+
+Your account gives you the full Répéter experience with personalized learning and progress tracking! 🎯`,
+  },
+  {
     slug: "security",
     title: "Security & Privacy",
     category: "Reference",
-    order: 7,
+    order: 9,
     excerpt: "Learn how we protect your data and ensure your privacy.",
     content: `Your privacy and security are our top priorities. Here's how we protect your data.
 
@@ -486,7 +737,7 @@ Your trust is important to us. We're committed to protecting your privacy while 
     slug: "troubleshooting",
     title: "Troubleshooting",
     category: "Reference",
-    order: 8,
+    order: 10,
     excerpt: "Common issues and how to solve them.",
     content: `Having trouble? Here are solutions to common issues.
 
